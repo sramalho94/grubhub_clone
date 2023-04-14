@@ -14,7 +14,8 @@ import {
   MagnifyingGlassIcon,
   AdjustmentsVerticalIcon
 } from 'react-native-heroicons/outline'
-import Categories from '../components/categories'
+import Categories from '../components/Categories'
+import FeaturedRow from '../components/FeaturedRow'
 
 const HomeScreen = () => {
   // get navigation object from useNavigation hook
@@ -64,11 +65,33 @@ const HomeScreen = () => {
       </View>
 
       {/* Body */}
-      <ScrollView>
+      <ScrollView
+        className="bg-gray-100"
+        contentContainerStyle={{
+          paddingBottom: 100
+        }}
+      >
         {/* Categories */}
         <Categories />
 
         {/* Featured Rows */}
+        <FeaturedRow
+          id="123"
+          title="Featured"
+          description="Paid placements from our partners"
+        />
+        {/* Tasty Discounts */}
+        <FeaturedRow
+          id="1234"
+          title="Tasty Discounts"
+          description="Everyone's been enjoying these juicy discounts"
+        />
+        {/* Offers Near You */}
+        <FeaturedRow
+          id="12345"
+          title="Offers near you"
+          description="Offers near you!"
+        />
       </ScrollView>
     </SafeAreaView>
   )
