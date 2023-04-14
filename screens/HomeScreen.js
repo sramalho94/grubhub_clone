@@ -84,13 +84,13 @@ const HomeScreen = () => {
         <FeaturedRow
           id="1234"
           title="Tasty Discounts"
-          description="Everyone's been enjoying these juicy discounts"
+          description="Everyone's been enjoying these juicy discounts!"
         />
         {/* Offers Near You */}
         <FeaturedRow
           id="12345"
           title="Offers near you"
-          description="Offers near you!"
+          description="Why not support your local restaurant tonight!"
         />
       </ScrollView>
     </SafeAreaView>
