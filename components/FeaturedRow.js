@@ -15,9 +15,9 @@ const FeaturedRow = ({ id, title, description }) => {
 
       <ScrollView
         horizontal
+        showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
-          paddingHorizontal: 15,
-          showsHorizontalScrollIndicator: false
+          paddingHorizontal: 15
         }}
       >
         {/* Restaurant Cards */}
