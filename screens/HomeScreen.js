@@ -1,3 +1,5 @@
+import 'abort-controller/polyfill'
+import 'react-native-url-polyfill/auto'
 import {
   View,
   Text,
@@ -6,7 +8,7 @@ import {
   TextInput,
   ScrollView
 } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import {
   UserIcon,
@@ -16,16 +18,29 @@ import {
 } from 'react-native-heroicons/outline'
 import Categories from '../components/Categories'
 import FeaturedRow from '../components/FeaturedRow'
+import { getFeatured } from '../sanity'
 
 const HomeScreen = () => {
   // get navigation object from useNavigation hook
   const navigation = useNavigation()
 
-  // on load, hide the header for the screen
+  const [featuredCategories, setFeaturedCategories] = useState([])
+
+  // on layout load, hide the header for the screen
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false
     })
+  }, [])
+
+  // on component load, get featured restaurants
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getFeatured()
+      setFeaturedCategories(data)
+    }
+
+    fetchData()
   }, [])
 
   return (
@@ -74,24 +89,15 @@ const HomeScreen = () => {
         {/* Categories */}
         <Categories />
 
-        {/* Featured Rows */}
-        <FeaturedRow
-          id="123"
-          title="Featured"
-          description="Paid placements from our partners"
-        />
-        {/* Tasty Discounts */}
-        <FeaturedRow
-          id="1234"
-          title="Tasty Discounts"
-          description="Everyone's been enjoying these juicy discounts!"
-        />
-        {/* Offers Near You */}
-        <FeaturedRow
-          id="12345"
-          title="Offers near you"
-          description="Why not support your local restaurant tonight!"
-        />
+        {/* Featured */}
+        {featuredCategories?.map((category) => (
+          <FeaturedRow
+            key={category._id}
+            id={category._id}
+            title={category.name}
+            description={category.short_description}
+          />
+        ))}
       </ScrollView>
     </SafeAreaView>
   )
