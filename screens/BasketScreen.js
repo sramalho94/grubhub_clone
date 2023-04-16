@@ -10,11 +10,16 @@ import React, { Component, useState, useMemo } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { selectRestaurant } from '../features/restaurantSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { removeFromBasket, selectBasketItems } from '../features/basketSlice'
+import {
+  removeFromBasket,
+  selectBasketItems,
+  selectBasketTotal
+} from '../features/basketSlice'
 import { XCircleIcon } from 'react-native-heroicons/outline'
 import { urlFor } from '../sanity'
 
 const BasketScreen = () => {
+  const total = useSelector(selectBasketTotal)
   const navigation = useNavigation()
   const restaurant = useSelector(selectRestaurant)
   const items = useSelector(selectBasketItems)
@@ -62,10 +67,13 @@ const BasketScreen = () => {
           </TouchableOpacity>
         </View>
 
-        <ScrollView>
+        <ScrollView className="divide-y divide-gray-200">
           {Object.entries(groupedItemsInBasket).map(([key, items]) => (
-            <View key={key}>
-              <Text>{items.length} x</Text>
+            <View
+              key={key}
+              className="flex-row items-center space-x-3 bg-white py-2 px-5"
+            >
+              <Text className="text-[#00CCBB]">{items[0].count} x</Text>
               <Image
                 source={{ uri: urlFor(items[0]?.image).url() }}
                 className="h-12 w-12 rounded-full"
@@ -83,6 +91,12 @@ const BasketScreen = () => {
             </View>
           ))}
         </ScrollView>
+        <View>
+          <View>
+            <Text>Subtotal</Text>
+            <Text>{`$${total}`}</Text>
+          </View>
+        </View>
       </View>
     </SafeAreaView>
   )
