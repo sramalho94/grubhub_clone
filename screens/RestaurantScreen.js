@@ -57,7 +57,7 @@ const RestaurantScreen = () => {
       headerShown: false
     })
   }, [])
-  console.log(genre)
+
   return (
     <>
       <BasketIcon />
