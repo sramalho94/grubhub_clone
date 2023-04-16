@@ -10,7 +10,7 @@ export const client = createClient({
 
 const builder = imageUrlBuilder(client)
 export const urlFor = (source) => {
-  builder.image(source)
+  return builder.image(source)
 }
 
 export async function getFeatured() {
@@ -24,4 +24,23 @@ export async function getFeatured() {
 }`
   )
   return featured
+}
+
+export async function getFeaturedById(id) {
+  const featured = await client.fetch(
+    `*[_type == "featured" && _id == $id]{
+      ...,
+      restaurants[]->{
+        ...,
+        dishes[]->
+      },
+    }`,
+    { id }
+  )
+  return featured
+}
+
+export async function getCategories() {
+  const categories = await client.fetch(`*[_type == "category"]`)
+  return categories
 }
