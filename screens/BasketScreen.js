@@ -20,6 +20,8 @@ import { urlFor } from '../sanity'
 
 const BasketScreen = () => {
   const total = useSelector(selectBasketTotal)
+  const tip = parseFloat((total * 0.15).toFixed(2))
+  const finalCost = parseFloat((total + tip + 5.99).toFixed(2))
   const navigation = useNavigation()
   const restaurant = useSelector(selectRestaurant)
   const items = useSelector(selectBasketItems)
@@ -91,11 +93,29 @@ const BasketScreen = () => {
             </View>
           ))}
         </ScrollView>
-        <View>
-          <View>
-            <Text>Subtotal</Text>
-            <Text>{`$${total}`}</Text>
+        <View className="p-5 bg-white mt-5 space-y-4">
+          <View className="flex-row justify-between">
+            <Text className="text-gray-400">Subtotal</Text>
+            <Text className="text-gray-400">{`$${total.toFixed(2)}`}</Text>
           </View>
+          <View className="flex-row justify-between">
+            <Text className="text-gray-400">Delivery Fee</Text>
+            <Text className="text-gray-400">{`$${5.99}`}</Text>
+          </View>
+          <View className="flex-row justify-between">
+            <Text className="text-gray-400">Tip</Text>
+            <Text className="text-gray-400">{`$${tip.toFixed(2)}`}</Text>
+          </View>
+          <View className="flex-row justify-between">
+            <Text className="text-gray-400">Total</Text>
+            <Text className="text-black font-extrabold">{`$${finalCost}`}</Text>
+          </View>
+
+          <TouchableOpacity className="rounded-lg bg-[#00CCBB] p-4">
+            <Text className="text-center text-white text-lg font-bold">
+              Place Order
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
