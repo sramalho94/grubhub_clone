@@ -29,12 +29,17 @@ export async function getFeatured() {
 export async function getFeaturedById(id) {
   const featured = await client.fetch(
     `*[_type == "featured" && _id == $id]{
+    ...,
+    restaurants[]->{
       ...,
-      restaurants[]->{
-        ...,
-        dishes[]->
+      type->{
+        ...
       },
-    }`,
+      dishes[]->{
+        ...
+      }
+    }
+  }`,
     { id }
   )
   return featured
