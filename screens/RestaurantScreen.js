@@ -1,5 +1,6 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
-import React, { useEffect, useLayoutEffect } from 'react'
+import React from 'react'
+import { useEffect, useLayoutEffect } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { urlFor } from '../sanity'
 import {
@@ -33,8 +34,8 @@ const RestaurantScreen = () => {
     }
   } = route
 
-  useEffect(
-    () =>
+  useEffect(() => {
+    const setRestaurantData = () => {
       dispatch(
         setRestaurant({
           id,
@@ -48,9 +49,11 @@ const RestaurantScreen = () => {
           long,
           lat
         })
-      ),
-    [dispatch]
-  )
+      )
+    }
+
+    setRestaurantData()
+  }, [dispatch])
 
   useLayoutEffect(() => {
     navigation.setOptions({
